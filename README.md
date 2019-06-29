@@ -39,3 +39,20 @@ The only tricky param is maybe *solr::zk_hosts*, you need to actually have Zooke
     manage_service_file => true,
   }
 ```
+
+
+    class { 'solr':
+      version => '7.7.2',
+      user => 'solr',
+      manage_user => true,
+      manage_group => true,
+      group => 'solr',
+      install_dir => '/soft',
+      data_dir => '/data',
+      service_name => 'S_solr_8983',
+      memory => '-Xms2048m -Xmx2048m',
+      jmx_remote => true,
+      http_port => 8983,
+      default_configsets => ['test'],
+      slave => false,
+    }
