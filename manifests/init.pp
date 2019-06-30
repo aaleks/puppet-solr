@@ -43,6 +43,7 @@ class solr (
   Array   $default_configsets,
   Boolean $slave,
   String  $master_url = none,
+  Hash    $config_map = none,
 
 ) {
 
@@ -162,7 +163,7 @@ class solr (
   }
 
   if $jmx_remote {
-    file_line { 'Enable JMX remote ${service_name}':
+    file_line { "Enable JMX remote ${service_name}":
       notify  => Service[$service_name],
       path    => $config_file,
       line    => "ENABLE_REMOTE_JMX_OPTS=\"true\"",
@@ -171,6 +172,7 @@ class solr (
     }
   }
 
+#create some configsets 
 each($default_configsets) |$value| {
 
   $file_created="${instance_dir}/server/solr/configsets/${value}"
@@ -189,6 +191,19 @@ each($default_configsets) |$value| {
     user        => $user,
     refreshonly => true,
     require     => File[$file_created]
+  }
+
+  ##replace the solrconfig file
+  file { "${name}-proxy.conf.PUPPET":
+    path => "/etc/proxy/testing/${name}-proxy.conf.PUPPET",
+    owner => root,
+    group => root,
+    mode => '777',
+    content => template('solr/solrconfig.xml.erb'),
+  }
+  
+  if config_map.hasKey($value){
+
   }
   
 }
