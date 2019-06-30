@@ -56,3 +56,29 @@ The only tricky param is maybe *solr::zk_hosts*, you need to actually have Zooke
       default_configsets => ['test'],
       slave => false,
     }
+
+
+hiera with hash_map: 
+
+solr_hash:
+  core: |
+    <!-- A request handler for the slave -->
+    <requestHandler name="/replication" class="solr.ReplicationHandler">
+      <lst name="slave">
+        <str name="masterUrl">http://master:8983/solr/CORENAME/replication</str>
+        <str name="pollInterval">00:00:20</str>
+      </lst>
+    </requestHandler>
+  test3: |
+    <!-- A request handler for master -->
+    <requestHandler name="/replication" class="solr.ReplicationHandler">
+      <lst name="master">
+        <str name="replicateAfter">optimize</str>
+        <str name="backupAfter">optimize</str>
+        <str name="confFiles">solrconfig_slave.xml:solrconfig.xml,x.xml,y.xml</str>
+      </lst>
+      <int name="maxNumberOfBackups">2</int>
+      <lst name="invariants">
+        <str name="maxWriteMBPerSec">10</str>
+      </lst>
+    </requestHandler>

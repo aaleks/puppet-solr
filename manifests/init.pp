@@ -193,16 +193,20 @@ each($default_configsets) |$value| {
     require     => File[$file_created]
   }
 
-  ##replace the solrconfig file
-  file { "${service_name} - Creating Solr solrconfig.xml file":
-    path => "${file_created}/conf/solrconfig.xml",
-    owner => $user,
-    group => $user,
-    content => template('solr/solrconfig.xml.erb'),
-  }
+ 
 
-  #if config_map.hasKey($value){
-  #}
+  if config_map.has_key($value){
+    notify { "DEBUGGGG:::: hasKey":
+      withpath => true,
+    }
+    ##replace the solrconfig file
+    file { "${service_name} - Creating Solr solrconfig.xml file":
+      path => "${file_created}/conf/solrconfig.xml",
+      owner => $user,
+      group => $user,
+      content => template('solr/solrconfig.xml.erb'),
+    }
+  }
   
 }
 

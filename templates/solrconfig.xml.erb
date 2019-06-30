@@ -1,5 +1,3 @@
-
-
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--
  Licensed to the Apache Software Foundation (ASF) under one or more
@@ -999,6 +997,13 @@
       <str>elevator</str>
     </arr>
   </requestHandler>
+
+  <% if @config_map -%>
+  <%- if config_map[@value] -%>
+    <%= config_map[@value] %>
+  <%- end -%>
+  <% end -%>
+
 
   <!-- Highlighting Component
 
