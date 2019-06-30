@@ -60,16 +60,16 @@ The only tricky param is maybe *solr::zk_hosts*, you need to actually have Zooke
 
 hiera with hash_map: 
 
-solr_hash:
-  core: |
-    <!-- A request handler for the slave -->
+profile::solr_hash:
+  test3: |
+    <!-- A request handler for the slave ---->
     <requestHandler name="/replication" class="solr.ReplicationHandler">
       <lst name="slave">
         <str name="masterUrl">http://master:8983/solr/CORENAME/replication</str>
         <str name="pollInterval">00:00:20</str>
       </lst>
     </requestHandler>
-  test3: |
+  test4: |
     <!-- A request handler for master -->
     <requestHandler name="/replication" class="solr.ReplicationHandler">
       <lst name="master">
