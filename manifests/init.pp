@@ -151,7 +151,7 @@ class solr (
   }
 
   if $memory {
-    file_line { 'Append memory setting to the default config file for the solr service':
+    file_line { "Append memory setting to the default config file for the solr service ${service_name}":
       notify  => Service[$service_name],
       path    => $config_file,
       line    => "SOLR_JAVA_MEM=\"${memory}\"",
@@ -162,7 +162,7 @@ class solr (
   }
 
   if $jmx_remote {
-    file_line { 'Enable JMX remote':
+    file_line { 'Enable JMX remote ${service_name}':
       notify  => Service[$service_name],
       path    => $config_file,
       line    => "ENABLE_REMOTE_JMX_OPTS=\"true\"",
@@ -180,11 +180,11 @@ each($default_configsets) |$value| {
     path    => "${file_created}",
     recurse => true,
     source  => "${instance_dir}/server/solr/configsets/_default",
-    notify  => Exec['create configsets ${value}']
+    notify  => Exec["${service_name} create configsets ${value}"]
 
   }
 
-  exec { 'create configsets ${value}':
+  exec { "${service_name} create configsets ${value}":
     command     => "${instance_dir}/bin/solr create -c $value -d $value -p $http_port -rf 3",
     user        => $user,
     refreshonly => true,
