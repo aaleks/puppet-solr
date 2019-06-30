@@ -119,7 +119,7 @@ class solr (
         timeout => 200,
         path    => '/usr/bin:/bin',
         unless  => "/usr/bin/test -e ${root_instance_dir}/.solr-${service_name}-${version}-installed-flag",
-        notify  => Exec["Remove Solr install base dir ${service_name}"],
+        notify  => Exec["Remove Solr install base directory ${service_name}"],
         require => [
           File[$root_instance_dir],
           File[$data_dir],
@@ -193,15 +193,15 @@ each($default_configsets) |$value| {
   
 }
 
-  exec { "Remove Solr install base dir ${service_name}":
+  exec { "Remove Solr install base directory ${service_name}":
     command     => "/bin/rm -rf ${home_dir}",
     path    => '/bin/',
     user        => 'root',
-    notify  => Exec["Remove Solr tar dir ${service_name}"],
+    notify  => Exec["Remove Solr tar directory ${service_name}"],
     refreshonly => true,
   }
 
-  exec { "Remove Solr tar dir ${service_name}":
+  exec { "Remove Solr tar directory ${service_name}":
     command     => "/bin/rm -rf ${install_archive}",
     path    => '/bin/',
     user        => 'root',
