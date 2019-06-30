@@ -43,7 +43,7 @@ class solr (
   Array   $default_configsets,
   Boolean $slave,
   String  $master_url = none,
-  Hash    $config_map = none,
+  Hash    $config_map = {},
 
 ) {
 
@@ -194,17 +194,15 @@ each($default_configsets) |$value| {
   }
 
   ##replace the solrconfig file
-  file { "${name}-proxy.conf.PUPPET":
-    path => "/etc/proxy/testing/${name}-proxy.conf.PUPPET",
-    owner => root,
-    group => root,
-    mode => '777',
+  file { "${service_name} - Creating Solr solrconfig.xml file":
+    path => "${file_created}/conf/solrconfig.xml",
+    owner => $user,
+    group => $user,
     content => template('solr/solrconfig.xml.erb'),
   }
-  
-  if config_map.hasKey($value){
 
-  }
+  #if config_map.hasKey($value){
+  #}
   
 }
 
