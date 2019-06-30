@@ -180,7 +180,7 @@ each($default_configsets) |$value| {
   file { $file_created:
     ensure  => 'directory',
     path    => "${file_created}",
-    recurse => true,
+    #recurse => true,
     source  => "${instance_dir}/server/solr/configsets/_default",
     notify  => Exec["${service_name} create configsets ${value}"]
 
