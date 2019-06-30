@@ -59,7 +59,7 @@ The only tricky param is maybe *solr::zk_hosts*, you need to actually have Zooke
 
 
 hiera with hash_map: 
-
+```
 profile::solr_hash:
   test3: |
     <!-- A request handler for the slave ---->
@@ -82,3 +82,4 @@ profile::solr_hash:
         <str name="maxWriteMBPerSec">10</str>
       </lst>
     </requestHandler>
+```
