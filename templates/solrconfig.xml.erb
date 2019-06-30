@@ -999,8 +999,8 @@
   </requestHandler>
 
   <% if @config_map -%>
-  <%- if config_map[@value] -%>
-    <%= config_map[@value] %>
+  <%- if @config_map[@value] -%>
+    <%= @config_map[@value] %>
   <%- end -%>
   <% end -%>
 

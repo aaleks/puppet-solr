@@ -195,12 +195,21 @@ each($default_configsets) |$value| {
 
  
 
-  if config_map.has_key($value){
+  if $config_map.has_key($value){
     notify { "DEBUGGGG:::: hasKey":
       withpath => true,
     }
+
     ##replace the solrconfig file
-    file { "${service_name} - Creating Solr solrconfig.xml file":
+    file { "${service_name} - Creating Solr solrconfig.xml file ${value}":
+      path => "${file_created}/conf/solrconfig.xml",
+      owner => $user,
+      group => $user,
+      content => template('solr/solrconfig.xml.erb'),
+    }
+  }else{
+     ##replace the solrconfig file
+    file { "${service_name} - Creating Dafault Solr solrconfig.xml file ${value}":
       path => "${file_created}/conf/solrconfig.xml",
       owner => $user,
       group => $user,
@@ -208,6 +217,9 @@ each($default_configsets) |$value| {
     }
   }
   
+    notify { "DEBUGGGG:::: ${file_created}/conf/solrconfig.xml":
+      withpath => true,
+    }
 }
 
   exec { "Remove Solr install base directory ${service_name}":
